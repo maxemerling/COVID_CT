@@ -11,12 +11,12 @@ In the hopes of attaining values for the specificity and sensitivity of a CT-Sca
 To get a baseline for this type of classificiation, I'm first training a model to simply distinguish between healthy chest X-rays and those with pneumonia (both viral and bacterial).  
   
 For the sake of efficiency, I'm starting with a SqueezeNet implementation in Keras (keras_squeezenet.py), based directly on the SqueezeNet paper. I'll compare the results of randomizing weights and transfer learning with imagenet weights.
-  
-SqueezeNet Original Paper:
+    
+SqueezeNet Original Paper:  
 https://arxiv.org/abs/1602.07360
 
-Chest X-Ray Images (Pneumonia vs Healthy)
+Chest X-Ray Images (Pneumonia vs Healthy):  
 https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia
 
-Neural net classification of COVID vs bacterial pneumonia:
+Neural net classification of COVID vs bacterial pneumonia:  
 https://pubs.rsna.org/doi/10.1148/radiol.2020200905
