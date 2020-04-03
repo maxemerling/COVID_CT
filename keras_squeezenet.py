@@ -45,7 +45,9 @@ def SqueezeNet(input_shape, weights='imagenet'):
 
     model = Model(inputs, x, name='squeezenet')
     
-    if weights == 'imagenet':
+    if weights == 'base_model':
+        weights_path = 'base_model.h5'
+    elif weights == 'imagenet':
         weights_path = get_file('squeezenet_weights_tf_dim_ordering_tf_kernels_notop.h5',
                                     WEIGHTS_PATH_NO_TOP,
                                     cache_subdir='models')
