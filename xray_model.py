@@ -64,7 +64,8 @@ x = Activation('relu', name='relu_conv10')(x)
 x = GlobalAveragePooling2D()(x)
 predictions = Activation('softmax', name='loss')(x)
 
-with tf.distribute.MirroredStrategy().scope():
+strategy = tf.distribute.MirroredStrategy()
+with strategy.scope():
     model = Model(inputs = base_model.input, outputs = predictions)
     model.compile(optimizer=Adam(lr=INIT_LR), loss='categorical_crossentropy', metrics=['accuracy'])
     
