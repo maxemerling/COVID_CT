@@ -58,9 +58,15 @@ class_weights = {class_id : max_val/num_images for class_id, num_images in count
 base_model = SqueezeNet(input_shape=(HEIGHT, WIDTH, 3), weights="base_model")
 x = base_model.output
 
-x = GlobalAveragePooling2D()(x)
 x = Dropout(DROPOUT, name='drop9')(x)
-predictions = Dense(CLASSES, activation='softmax')(x)
+x = Convolution2D(CLASSES, (1, 1), padding='valid', name='conv10')(x)
+x = Activation('relu', name='relu_conv10')(x)
+x = GlobalAveragePooling2D()(x)
+predictions = Activation('softmax', name='loss')(x)
+
+# x = GlobalAveragePooling2D()(x)
+# x = Dropout(DROPOUT, name='drop9')(x)
+# predictions = Dense(CLASSES, activation='softmax')(x)
 
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
