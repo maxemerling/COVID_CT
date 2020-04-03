@@ -55,7 +55,7 @@ counter = Counter(train_generator.classes)
 max_val = float(max(counter.values()))       
 class_weights = {class_id : max_val/num_images for class_id, num_images in counter.items()}
 
-base_model = SqueezeNet(input_shape=(HEIGHT, WIDTH, 3), weights="imagenet")
+base_model = SqueezeNet(input_shape=(HEIGHT, WIDTH, 3), weights="base_model")
 x = base_model.output
 x = Dropout(DROPOUT, name='drop9')(x)
 
