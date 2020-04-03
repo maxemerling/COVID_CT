@@ -1,6 +1,6 @@
 from keras_squeezenet import SqueezeNet
 
-from keras.layers import Dropout, Convolution2D, Activation, GlobalAveragePooling2D
+from keras.layers import Dropout, Convolution2D, Dense, GlobalAveragePooling2D
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Model
 from keras.optimizers import Adam
@@ -13,9 +13,9 @@ WIDTH, HEIGHT = (664, 485)
 
 DROPOUT=0.2
 CLASSES=2
-BATCH_SIZE=8
+BATCH_SIZE=16
 NUM_EPOCHS=20
-INIT_LR=0.001
+INIT_LR=0.0001
 
 BASE_PATH = 'data/chest_xray/'
 TRAIN_PATH = BASE_PATH + 'train'
@@ -57,12 +57,10 @@ class_weights = {class_id : max_val/num_images for class_id, num_images in count
 
 base_model = SqueezeNet(input_shape=(HEIGHT, WIDTH, 3), weights="base_model")
 x = base_model.output
-x = Dropout(DROPOUT, name='drop9')(x)
 
-x = Convolution2D(CLASSES, (1, 1), padding='valid', name='conv10')(x)
-x = Activation('relu', name='relu_conv10')(x)
 x = GlobalAveragePooling2D()(x)
-predictions = Activation('softmax', name='loss')(x)
+x = Dropout(DROPOUT, name='drop9')(x)
+predictions = Dense(CLASSES, activation='softmax')(x)
 
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
@@ -79,7 +77,8 @@ model.fit_generator(
     shuffle=True
 )
 
-model.evaluate_generator(generator=test_generator,
+results = model.evaluate_generator(generator=test_generator,
                          steps=test_generator.samples // BATCH_SIZE)
+print('RESULTS:', {key: val for key, val in zip(model.metrics_names, results)})
     
 model.save('model.h5')
