@@ -6,7 +6,7 @@ The math is fairly simple, relying on Bayes's Theorem and the Law of Total Proba
 
 ## Modeling CT Scan Tests
 In the hopes of attaining values for the specificity and sensitivity of a CT-Scan test (and validating the source liked below), I'm attempting to train a baseline model for detecting COVID-19 pneumonia.  
-To get a baseline for this type of classificiation, I'm first training a model to simply distinguish between healthy chest X-rays and those with pneumonia (both viral and bacterial). This dataset is linked below.
+To get a baseline for this type of classificiation, I'm first training a model to simply distinguish between healthy chest X-rays and those with pneumonia (both viral and bacterial).  
 For the sake of efficiency, I'm starting with a SqueezeNet implementation in Keras (keras_squeezenet.py), based directly on the SqueezeNet paper. I'll compare the results of randomizing weights and transfer learning with imagenet weights.
 
 SqueezeNet Original Paper:
