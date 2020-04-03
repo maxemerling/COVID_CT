@@ -53,9 +53,7 @@ def SqueezeNet(input_shape, weights='imagenet'):
                                     cache_subdir='models')
         model.load_weights(weights_path)
     elif weights is not None:
-        raise ValueError('The `weights` argument should be either '
-                         '`None` (random initialization) or `imagenet` '
-                         '(pre-training on ImageNet).')
+        raise ValueError('Unknown `weights` argument')
     
     
     return model
